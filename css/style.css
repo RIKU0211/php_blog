@@ -1,0 +1,37 @@
+body {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: #eee;
+}
+
+a {
+  color: purple;
+  text-decoration: none;
+}
+
+form, fieldset {
+  border: none;
+  display: inline;
+}
+
+#header {
+  margin: 0;
+  width: 100%;
+  text-align: center;
+}
+
+#nav {
+}
+
+#nav li {
+  position: relative;
+  right: 20px;
+  display: inline;
+}
+
+#container {
+  margin: 0 auto;
+  width: 800px;
+  text-align: center;
+}
