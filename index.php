@@ -13,9 +13,6 @@
   $dbh = dbh();
   $stmt = $dbh->query("SELECT * FROM posts WHERE user_id = '$id'");
   $posts = $stmt->fetchAll();
-
-  $stmt = $dbh->query("SELECT * FROM comments");
-  $comments = $stmt->fetchAll();
 ?>
 
 <!DOCTYPE html>
@@ -43,5 +40,35 @@
       </nav>
     </header>
 
+    <div id="container">
+      <?php foreach($posts as $post) { ?>
+      <div class="post">
+        <!-- title -->
+        <h3>
+          <?php echo $post["title"] ?>
+          <?php if(!empty($post["img_path"])) {
+            echo "<img src=" . $post["img_path"] . " />";
+          }
+          ?>
+        </h3>
+        <hr>
+
+        <!-- body -->
+        <p><?php echo nl2br($post["body"]) ?></p>
+
+        <!-- buttons -->
+        <div id="button">
+          <form method="post" action="edit.php">
+            <addr title="edit">
+              <button type="submit" class="btn btn-info" name="edit" value=<?php echo $post["id"] ?>>
+                <i class="icon-edit idon-white"></i>
+              </button>
+            </addr>
+          </form>
+        </div>
+        <br><br><br><hr>
+      </div>
+      <?php } ?>
+    </div>
   </body>
 </html>
