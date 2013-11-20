@@ -11,8 +11,8 @@
   $id = $_SESSION["id"];
 
   $dbh = dbh();
-  $stmt = $dbh->query("SELECT * FROM posts WHERE user_id = '$id'");
-  $posts = $stmt->fetchAll();
+  $stmt = $dbh->query("SELECT * FROM tasks WHERE user_id = '$id'");
+  $tasks = $stmt->fetchAll();
 ?>
 
 <!DOCTYPE html>
@@ -33,41 +33,25 @@
       </hgroup>
       <nav>
         <ul id="nav">
-          <li><a href="user_signup/signout.php">|SIGN OUT|</a></li>
-          <li><a href="post.php">|POST|</a></li>
-          <li><a href="user_controlloer/signout.php">|Sign Out|</a></li>
+          <li><a href="index.php">|HOME|</a></li>
+          <li><a href="post.php">|MAKE|</a></li>
+          <li><a href="user_signup/signout.php">|Sign Out|</a></li>
         </ul>
       </nav>
     </header>
 
     <div id="container">
-      <?php foreach($posts as $post) { ?>
-      <div class="post">
-        <!-- title -->
-        <h3>
-          <?php echo $post["title"] ?>
-          <?php if(!empty($post["img_path"])) {
-            echo "<img src=" . $post["img_path"] . " />";
-          }
-          ?>
-        </h3>
-        <hr>
-
-        <!-- body -->
-        <p><?php echo nl2br($post["body"]) ?></p>
-
-        <!-- buttons -->
-        <div id="button">
-          <form method="post" action="edit.php">
-            <addr title="edit">
-              <button type="submit" class="btn btn-info" name="edit" value=<?php echo $post["id"] ?>>
-                <i class="icon-edit idon-white"></i>
-              </button>
-            </addr>
-          </form>
-        </div>
-        <br><br><br><hr>
-      </div>
+      <?php foreach($tasks as $task) { ?>
+        <p> <?php echo $task['title']; ?> </p>
+        <p> <?php echo $task['body']; ?> </p>
+        <p> <?php echo $task['closed_at']; ?> </p>
+        <form method="post" action="edit.php">
+          <button type="button" name="edit">Edit</button>
+        </form>
+        <form method="post" action="delete.php">
+          <button type="button" name="delete">Delete</button>
+        </form>
+        <p>-------------------------------------------------------------</p>
       <?php } ?>
     </div>
   </body>

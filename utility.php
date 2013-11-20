@@ -1,7 +1,7 @@
 <?php
   function dbh(){
     try{
-    return new PDO("mysql:dbname=php_blog", "root", "");
+    return new PDO("mysql:dbname=php_todo", "root", "");
     }catch(PDOException $e){
       echo $e->getMessage();
       exit();

@@ -35,7 +35,7 @@
     }
 
     if(empty($error)){
-      $sql = "INSERT INTO users (name, email, password, created_at) VALUES(:name, :email, :password, NOW())";
+      $sql = "INSERT INTO users (name, email, password) VALUES(:name, :email, :password)";
       $stmt = $dbh->prepare($sql);
       $params = array(":name" => $name,
                       ":email" => $email,

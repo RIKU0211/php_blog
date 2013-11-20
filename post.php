@@ -7,12 +7,11 @@
   $error = array();
   $title = "";
   $body = "";
-  $img = "";
 
   if(@$_POST["submit"]){
     $title = $_POST["title"];
     $body = $_POST["body"];
-    $img = $_POST["img"];
+    $closed_at = $_POST["closed_at"];
 
     if(empty($title)){
       $error[] = "empty title";
@@ -30,11 +29,11 @@
       $id = $_SESSION["id"];
       $dbh = dbh();
       
-      $stmt = $dbh->prepare("INSERT INTO posts(title, body, img_path, created_at, user_id) VALUES(:title, :body, :img, NOW(), :id)");
+      $stmt = $dbh->prepare("INSERT INTO tasks(user_id, title, body, created_at, closed_at) VALUES(:id, :title, :body, NOW(), :closed_at)"); 
+      $stmt->bindValue(":id", $id, PDO::PARAM_INT);
       $stmt->bindValue(":title", $title, PDO::PARAM_STR);
       $stmt->bindValue(":body", $body, PDO::PARAM_STR);
-      $stmt->bindValue(":img", $img, PDO::PARAM_STR);
-      $stmt->bindValue(":id", $id, PDO::PARAM_INT);
+      $stmt->bindValue(":closed_at", $closed_at, PDO::PARAM_STR);
       $stmt->execute();
 
       header("Location: index.php");
@@ -63,20 +62,15 @@
   <body>
     <form method="post" action="post.php">
       <div id="post">
-        <h2>Post Article</h2>                                                   
+        <h2>Make Todo</h2>                                                   
         <!-- error messages -->
         <?php if(!empty($error)) { foreach($error as $i) { echo h($i) . "<br>"; } } ?>
         <span class="label label-info">Title</span><br>
         <input type="text" name="title" size="30" placeholder="title" value="<?php echo $title ?>" /><br>
         <span class="label label-info">Body</span><br>
-        <textarea name="body" rows="8" cols="30" placeholder="body"><?php echo $body ?></textarea><br>
-        <!--
-        <span class="label label-info">Icon</span><br>
-        <input type="radio" name="img" value="img/icon/pachuli.gif" checked="checked" /><img src="img/icon/pachuli.gif" />
-        <input type="radio" name="img" value="img/icon/suwako.gif" /><img src="img/icon/suwako.gif" />
-        <input type="radio" name="img" value="img/icon/kaguya.gif" /><img src="img/icon/kaguya.gif" />
-        <input type="radio" name="img" value="img/icon/satori.gif" /><img src="img/icon/satori.gif" />
-        -->
+        <textarea name="body" rows="8" cols="30" placeholder="body"><?php echo $body ?></textarea><br> 
+        <span class="label label-info">Closing day</span><br>
+        <input type="date" name="closed_at" value="2013-01-01">
         <br><br>
         <button type="submit" name="submit" class="btn btn-primary" value="Post">Post</button>
         <button type="button" name="home" class="btn btn-success" onclick="location.href='index.php'">Home</button>
