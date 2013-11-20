@@ -46,10 +46,10 @@
         <p> <?php echo $task['body']; ?> </p>
         <p> <?php echo $task['closed_at']; ?> </p>
         <form method="post" action="edit.php">
-          <button type="button" name="edit">Edit</button>
+          <button type="submit" class="btn btn-info" name="edit" value=<?php echo $task["id"] ?>>Edit</button>
         </form>
         <form method="post" action="delete.php">
-          <button type="button" name="delete">Delete</button>
+          <button type="submit" class="btn btn-info" name="delete" value=<?php echo $task["id"] ?>>Delete</button>
         </form>
         <p>-------------------------------------------------------------</p>
       <?php } ?>
